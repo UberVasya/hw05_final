@@ -205,17 +205,29 @@ class TestPostPages(TestCase):
     def test_profile_follow(self):
         """На странице profile можно подписаться на автора."""
         self.authorized_client.force_login(self.follower)
-        self.authorized_client.get(reverse('posts:profile_follow', kwargs={'username': self.user}))
-        self.assertTrue(Follow.objects.filter(user=self.follower, author=self.user).exists())
+        self.authorized_client.get(reverse(
+            'posts:profile_follow',
+            kwargs={'username': self.user}
+        ))
+        self.assertTrue(Follow.objects.filter(
+            user=self.follower,
+            author=self.user
+        ).exists())
 
     def test_profile_unfollow(self):
         """На странице profile можно отписаться от автора."""
-        if not Follow.objects.filter(user=self.user, author=self.user).exists():
+        if not Follow.objects.filter(
+                user=self.user,
+                author=self.user
+        ).exists():
             Follow.objects.create(user=self.user, author=self.user)
         self.authorized_client.get(reverse(
             'posts:profile_unfollow', kwargs={'username': self.user}
         ))
-        self.assertFalse(Follow.objects.filter(user=self.user, author=self.user).exists())
+        self.assertFalse(Follow.objects.filter(
+            user=self.user,
+            author=self.user
+        ).exists())
 
 
 class TestPostPagesPaginator(TestCase):
