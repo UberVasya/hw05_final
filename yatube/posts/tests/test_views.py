@@ -9,7 +9,9 @@ from django import forms
 from ..models import Post, Group, Follow
 from django.core.cache import cache
 
+
 User = get_user_model()
+
 
 @override_settings(MEDIA_ROOT=tempfile.mkdtemp(dir=settings.BASE_DIR))
 class TestPostPages(TestCase):
@@ -125,7 +127,6 @@ class TestPostPages(TestCase):
         self.assertEqual(first_object.group, self.posts_single.group)
         self.assertEqual(first_object.image, f"posts/{self.test_image}")
 
-
     def test_post_detail_page_show_correct_context(self):
         """Шаблон post_detail сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse(
@@ -198,7 +199,7 @@ class TestPostPages(TestCase):
         response = self.authorized_client.get(
             reverse('posts:follow_index')
         )
-        self.assertEqual(len(response.context['page_obj']), post_count + 1 )
+        self.assertEqual(len(response.context['page_obj']), post_count + 1)
 
     def test_profile_follow(self):
         """На странице profile можно подписаться на автора."""

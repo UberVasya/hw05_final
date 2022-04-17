@@ -5,6 +5,7 @@ from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 
+
 @cache_page(20)
 def index(request):
     templates = 'posts/index.html'
@@ -109,6 +110,7 @@ def post_edit(request, post_id):
         'post': post
     })
 
+
 @login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -120,6 +122,7 @@ def add_comment(request, post_id):
         comment.save()
     return redirect('posts:post_detail', post_id=post_id)
 
+
 @login_required
 def follow_index(request):
     template = 'posts/follow.html'
@@ -130,12 +133,14 @@ def follow_index(request):
     context = {'page_obj': page_obj, }
     return render(request, template, context)
 
+
 @login_required
 def profile_follow(request, username):
     author = get_object_or_404(User, username=username)
     if request.user != author:
         Follow.objects.get_or_create(user=request.user, author=author)
     return redirect('posts:profile', username=username)
+
 
 @login_required
 def profile_unfollow(request, username):
