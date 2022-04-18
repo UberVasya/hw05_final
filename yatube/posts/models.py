@@ -95,7 +95,6 @@ class Follow(models.Model):
         related_name='following'
     )
 
-
     class Meta:
         verbose_name = 'подписка'
         constraints = [
